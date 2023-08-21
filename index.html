@@ -1,0 +1,43 @@
+<div id="root"></div>
+
+<script>
+  // Function to update the style of required elements
+  function updateElementStyle(element) {
+    element.style.backgroundColor = 'lightblue';
+    element.style.color = 'white';
+  }
+
+  // Callback function for MutationObserver
+  function mutationCallback(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        // Loop through added nodes and update style if required
+        mutation.addedNodes.forEach((addedNode) => {
+          if (addedNode instanceof Element) {
+            // Check if the added node meets your criteria (you can customize this condition)
+            updateElementStyle(addedNode);
+          }
+        });
+      }
+    }
+  }
+
+  // Target element to observe for changes
+  const targetElement = document.getElementById('root');
+
+  // Options for the MutationObserver
+  const observerOptions = {
+    attributes: true,
+    childList: true,
+    subtree: true,
+    characterData: true,
+  };
+
+  // Create a new MutationObserver with the callback
+  const observer = new MutationObserver(mutationCallback);
+
+  // Start observing the target element
+  observer.observe(targetElement, observerOptions);
+
+  console.log(targetElement);
+</script>
